@@ -2,5 +2,4 @@
 Important Disclaimer ⚠️ This repository is for educational and research purposes only. 🧑‍💻 It does not promote or encourage illegal or harmful activities. 🚫 Misuse is your sole responsibility. 🛑 The authors assume no liability. 🙏 Thank you for your understanding!
 
 
-
-![la nuova piaga (1)](https://github.com/user-attachments/assets/de358c56-a1f6-4832-a55a-640cd40aa3ec)
+<img width="801" height="621" alt="Schermata_20250808_222346" src="https://github.com/user-attachments/assets/c177d9fc-1d45-4ff5-9939-7d4c11115bbe" />
