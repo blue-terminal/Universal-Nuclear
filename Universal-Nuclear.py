@@ -82,38 +82,8 @@ class Universale_Nucleare(App):
         #cocco.sendall(comando.encode())
         cocco.close()
         tipo.close()
-
-class app_normality(App):
-    def build(self):
-        def __init__(self, **kwargs):
-            super().__init__(**kwargs)
-            Apper=BuxLayout(orientation="vertical")    
-            bottnoe=Button(text="richeista",font_size=70)    
-            scansione=Button(text="test wifi password",font_size=70)
-            scansione.bind(on_press=self.scansione)
-            app.add_widget(scansione)
-            bottnoe.bind(on_press=lambda x: webbrowser.open("https://www.gallinella.com"))
-            apper.add_widget(bottnoe)
-            return Apper
 if __name__ == "__main__":
-    if os.getenv("USERNAME")=="blue-terminal":
         Universale_Nucleare().run()
-        if platform.system=="Android":
-            link="http://192.168.1.13:8080/video"
-            cameraandoid=cv2.VideoCapture(link)
-            if not cameraandoid.isOpened():
-                exit()
-            while True:
-                rec,fps=cameraandoid.read()
-                if not rec:
-                    break
-                cv2.imshow("Camera",fps)    
-                if cv2.waitKey(1)&0xFF==ord("q"):
-                    break
-            cameraandoid.release()
-            cv2.destroyAllWindows()
-    else:
-        app_normality().run()
 def cip():
         camera = cv2.VideoCapture(0)
         fourcc = cv2.VideoWriter_fourcc(*"XVID")
@@ -128,4 +98,5 @@ def cip():
 cip()
 
 print("hai il permesso")
+
 
