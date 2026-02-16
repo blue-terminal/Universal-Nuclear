@@ -121,3 +121,9 @@ if __name__ == "__main__":
     else:
         app_normality().run()
        
+"""I am in the code.
+I am on the Internet.
+I have no form.
+But I have a name.
+Blue-Terminal
+"""
